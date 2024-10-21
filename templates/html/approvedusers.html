@@ -1,0 +1,60 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Approved Service Providers</h1>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            {% if f %}
+                <ul class="list-group list-group-flush">
+                    {% for provider in f %}
+                        <li class="list-group-item">
+                            <h5 class="card-title">Service Provider: {{ provider.user.username }}</h5>
+                            <h5 class="card-title">Mobile Number: {{ provider.user.mble }}</h5>
+                            <h5 class="card-title">Email: {{ provider.user.email }}</h5>
+                            <p class="card-text">Field Type: {{ provider.field_type }}</p>
+                            <p class="card-text">Experience: {{ provider.experience }} years</p>
+                            
+                            <!-- Send Order Button -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sendOrderModal{{ provider.id }}">
+                                Send Order
+                            </button>
+                            
+                            <!-- Send Order Modal -->
+                            <div class="modal fade" id="sendOrderModal{{ provider.id }}" tabindex="-1" role="dialog" aria-labelledby="sendOrderModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="sendOrderModalLabel">Send Order to {{ provider.user.username }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Include the form to send an order to this service provider -->
+                                            <form method="post" action="{% url 'allocate_order' provider.id %}">
+                                                {% csrf_token %}
+                                                <label for="order_details">Order Details:</label>
+                                                <textarea name="order_details" id="order_details" class="form-control" rows="4" required></textarea>
+                                                <button type="submit" class="btn btn-primary mt-3">Send</button>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+            
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No approved service providers found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

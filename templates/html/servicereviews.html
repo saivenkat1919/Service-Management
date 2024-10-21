@@ -1,0 +1,33 @@
+{%extends 'html/base.html'%}
+{%load static%}
+{%block content%}
+
+<div class="container mt-5">
+    <h1>Service Provider Reviews</h1>
+    <h2>{{ service_provider.user.username }}</h2>
+
+    {% if booking_reviews %}
+        {% for booking_review in booking_reviews %}
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h4>Booking ID: {{ booking_review.order.id }}</h4>
+
+                    <h6>Reviews and Ratings:</h6>
+                    <ul>
+                        {% for review in booking_review.reviews %}
+                            <li>
+                                <p>Review: {{ review.review }}</p>
+                                <p>Rating: {{ review.rating }}</p>
+                                <p>Customer: {{ review.user.username }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No reviews available for allocated orders.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

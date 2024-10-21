@@ -1,0 +1,94 @@
+{% extends 'html/base.html' %}
+{% block title %}User List{% endblock %}
+{% block content %}
+<style type="text/css">
+	.errorlist {
+		list-style-type:none;
+		color:red;
+		margin:0px;
+		padding:0px;
+	}
+</style>
+<div class="container-fluid mt-4">
+	<div class="row mx-2">
+		<div class="col-md-3 card shadow-lg mr-2 h-100">
+			<div class="card-body">
+				<h4>Create User</h4>
+				<form method="post">
+					{% csrf_token %}
+					{% for i in w %}
+						{{i}}
+						{% for e in p %}
+							{% if e.0 in i.label_tag %}
+								{{e.1}}
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+					<div class="row mb-2">
+						<div class="col">
+							<input type="reset" value="Clear" class="btn btn-outline-danger form-control" style="border-radius: 10px;">
+						</div>
+						<div class="col">
+							<input type="submit" value="Create" class="btn btn-outline-success form-control" style="border-radius: 10px;">
+						</div>
+					</div>
+				</form>
+				{% if messages %}
+					{% for m in messages %}
+						<div class="alert alert-{{m.tags}} alert-dismissible">
+  							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  							{{m}}
+						</div>
+					{% endfor %}
+				{% endif %}
+			</div>
+		</div>
+		<div class="col card shadow-lg h-100">
+			<div class="card-body">
+				<h4>User List</h4>
+				<table class="table">
+					<tr>
+						<th>Sno</th>
+						<th>Username</th>
+						<th>Email Id</th>
+                        <th>Mobile Number</th>
+						<th>Role Type</th>
+						<th>Actions</th>
+					</tr>
+					{% for j in k %}
+					<tr>
+						<td>{{forloop.counter}}</td>
+						<td>{{j.username}}</td>
+						<td>{{j.email}}</td>
+                        <td>{{j.mble}}</td>
+						<td>
+							{% if j.role_type == 'customer' %}
+								{% if j.is_superuser %}
+									<p class="mr-3">Admin</p>
+								{% else %}
+									<p>customer</p>
+								{% endif %}
+							{% elif j.role_type == 'Service provider' %}
+								<p>Service Provider</p>
+							{% else %}
+							{% endif %}
+						</td>
+						<td>
+							<div class="row">
+								<div class="col">
+									<a href ="{% url 'set' j.id %}" class="btn btn-outline-info form-control" style="border-radius: 10px">Edit</a>
+								</div>
+								<div class="col">
+									<a href="{% url 'usd' j.id  %}" class="btn btn-outline-danger form-control" style="border-radius: 10px;">Delete</a>
+								</div>
+							</div>
+						</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+

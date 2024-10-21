@@ -1,0 +1,49 @@
+{% extends 'html/base.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Your Bookings</h1>
+        {% if orders %}
+            <ul class="list-group">
+                {% for order in orders %}
+                    <li class="list-group-item mb-3" style="padding: 30px;">
+    
+                        <h5><span style="color: #414141; font-weight: 600;">Placed On: </span>  {{ order.order_date }}</h5>
+                        <h5><span style="color: #414141; font-weight: 600;">Requested On:</span> {{ order.delivery_date }}</h5>
+                        <h5 style="color: #414141; font-weight: 600;">Services:</h5>
+                        <ul class="list-group">
+                            {% for product in order.products.all %}
+                                <li class="list-group-item">
+                                    {{ product.name }} - {{ product.price }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        {% if order.allocatedorder_set.exists %}
+                        <h5 style="color: #414141; font-weight: 600;padding-top: 8px;">Allocated Service Providers:</h5>
+                        <ul class="list-group">
+                            {% for allocated_provider in order.allocatedorder_set.all %}
+                                <li class="list-group-item">
+                                    {{ allocated_provider.service_provider.user.username }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>Allocated service providers will be known soon.</p>
+                    {% endif %}
+                    
+                        <div style="margin-top: 10px;">
+                            <a href="{% url 'cancel_order' order.id %}" class="btn btn-danger" style="border-radius: 10px;">Cancel Booking</a>
+                            <a href="{% url 'complete' order.id %}" class="btn btn-success" style="border-radius: 10px;">Completed</a>
+                        </div>
+                        
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No bookings found.</p>
+        {% endif %}
+        
+
+        
+    </div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% load static %}
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="{% url 'home' %}">
+  <img src="{% static 'images/service.webp' %}" alt="logo.png" class="rounded-circle" width="35px" height="35px" style="margin-left: 100px;"></a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar" style="display: flex;justify-content: space-between;" >
+    <ul class="navbar-nav">
+      {% if not user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link navv_it {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link navv_it {% if request.path == '/helpdesk/' %}active{% endif %}" href="{% url 'hl' %}">Helpdesk</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link navv_it {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+      </li>
+    
+      {% if request.user.role_type == "customer" and not request.user.is_superuser %}
+      <li class="nav-item">
+        <a class="nav-link navv_it {% if request.path == '/helpdesk/' %}active{% endif %}" href="{% url 'hl' %}">Helpdesk</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/services/' %}active{% endif %}" href="{% url 'services' %}">Book Services</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link {% if request.path == '/order_history/'|add:user.id|add:'/' %}active{% endif %}" href="{% url 'order_history' user.id %}">Your Bookings</a>
+    </li>
+    
+      <div class="d-flex">
+        <a class="{% if request.path == '/cart/' %}active{% endif %}" href="{% url 'view_cart' %}">
+          <img  id="cart-icon" src="{% static 'images/shopping-cart (1).png' %}" style="width: 24px; padding-top: 7px;">
+        </a>
+      </div>
+
+      {% elif request.user.role_type == "Service provider" and not request.user.is_superuser %}
+      <li class="nav-item">
+        <a class="nav-link navv_it" href="{%url 'bookings' user.id %}">Check Bookings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link navv_it" href="{% url 'approval'%}">Approval</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link navv_it" href="{% url 'serv' user.id%}">Reviews</a>
+      </li>
+      {% else %}
+      {% endif %}
+      {% if request.user.is_superuser %}
+          <li class="nav-item">
+            <a class="nav-link navv_it {% if request.path == '/usrlst/' %}active{% endif %}" href="{% url 'usrl' %}">User List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navv_it" href="{%url 'service_requests'%}">Service requests</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navv_it" href="{% url 'pending_submissions' %}">Approvals</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navv_it" href="{%url 'add_services'%}">Add Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link navv_it" href="{% url 'feedback' %}">Feedbacks</a>
+          </li>
+          {% endif %}
+        {% endif %}
+    </ul>
+    <ul class="navbar-nav ml-auto" style="margin-right:200px">
+      {% if not user.is_authenticated %}
+      <button class="btn btn-primary mx-2" id="btn2" type="button"> <a href="{% url 'login' %}">Login</a></button>
+      <button class="btn btn-secondary" id="btn1" type="button"><a href="{% url 'signup' %}">Sign Up</a></button>
+
+      {% else %}
+      <div class="dropdown">
+        <a class="nav-link" data-toggle="dropdown">
+          Welcome {% if user.is_superuser %}
+                    CommunityManager
+                  {% else %}
+                    {% if request.user.role_type == 'customer' %}
+                     customer
+            
+                    {% else %}
+                      Service Provider
+                    {% endif %}
+                  {% endif %} 
+        </a>
+      </div>
+        <button class="btn btn-secondary" id="btn1" type="button" style="border-radius: 10px;margin-left: 10px;margin-right: 10px;"><a href="{% url 'lgt' %}">Log out</a></button>
+        <div class="d-flex">
+          <a href="{% url 'pf' %}">
+            <img  id="cart-icon" src="{% static 'images/profile.jpg' %}" style="width: 30px; margin-top: 5px; border-radius: 15px;">
+          </a>
+        </div>
+      {% endif %}
+    </ul>
+  </div>
+</nav>

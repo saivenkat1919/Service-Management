@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Allocation Notification</title>
+</head>
+<body>
+    <h2>Service Allocation Notification</h2>
+    <p>Dear {{ user.username }},</p>
+    <p>Your service request has been allocated to the following service providers:</p>
+
+    <ul>
+        {% for provider_detail in provider_details %}
+         
+            <li>{{ provider_detail }}</li>
+        {% endfor %}
+       
+    </ul>
+    <ul>
+        {% for mobile in phone_numbers %}
+         
+            <li>{{ mobile }}</li>
+        {% endfor %}
+       
+    </ul>
+
+    <p>You can contact them for further details or assistance.</p>
+    <p>If there is a change in time the service providers will let you know</p>
+    <p>Thank you for using our services!</p>
+
+    <p>Sincerely,</p>
+    <p>Your Service Provider Team</p>
+</body>
+</html>

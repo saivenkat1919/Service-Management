@@ -1,0 +1,20 @@
+{% extends 'html/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5">
+    <h1 style="text-align: center;">Approve Your Details</h1>
+    <div class="card col-md-5 mx-auto shadow-lg mt-4" id="login" style="border-radius: 10px;">
+        <div class="mb-3 mt-3">
+        <form method="POST">
+            {% csrf_token %}
+            {% for f in form %}
+                {{ f }}
+            {% endfor %}
+            <button id="but" type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+</div>
+
+{% endblock %}

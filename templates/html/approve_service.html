@@ -1,0 +1,21 @@
+{% extends 'html/base.html' %}
+{% block content %}
+<div class="container">
+    <h1 class="mt-5">Approve Service Submission</h1>
+    <div class="card mt-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" name="is_approved" id="is_approved">
+                    <label class="form-check-label" for="is_approved">Approve</label>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary" name="approve">Submit</button>
+                    <button type="submit" class="btn btn-danger" name="dont_approve">Don't Approve</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

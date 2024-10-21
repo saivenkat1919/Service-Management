@@ -1,0 +1,14 @@
+{% extends 'html/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 style="color: #414141;">Services</h2>
+    <ul style="list-style: none;">
+        {% for product in order.products.all %}
+            <li>{{ product.name }} - {{ product.price }}</li>
+        {% endfor %}
+    </ul>
+    <h4 style="color: #414141;">Thanks for choosing our service</h4>
+    <a href="{% url 'fed' order.id%}" class="btn btn-dark" style="border-radius: 10px; background-color: #333;">Give us feedback</a>
+</div>
+{% endblock %}

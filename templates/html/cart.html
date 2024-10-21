@@ -1,0 +1,57 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1 style="padding: 20px 0 20px 0;">Your Cart</h1>
+    {% if messages %}
+            {% for m in messages %}
+                <div class="alert alert-{{m.tags}} alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{m}}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% if cart_items %}
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Service</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>${{ item.product.price }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>${{ item.product.price|floatformat:2 }}</td>
+                            <td>
+                                <a href="{% url 'remove_from_cart' item.product.pk %}" class="btn btn-danger btn-sm" style="border-radius: 10px;">Remove</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="3"><strong>Total</strong></td>
+                        <td colspan="2"><strong>${{ cart_total }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">
+            <a href="{% url 'services' %}" class="btn" style="color: #333; border-radius: 10px; border: 2px solid #414141;">Continue Booking</a>
+            <a href="{% url 'checkout' %}" class="btn btn-primary" style="background-color: #333; border-radius: 10px; border-style: none;">Checkout</a>
+        </div>
+    {% else %}
+        <p>Your cart is empty.</p>
+        <div class="text-center">
+            <a href="{% url 'services' %}" class="btn btn-secondary">Start Booking</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

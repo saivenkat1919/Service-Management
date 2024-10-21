@@ -1,0 +1,60 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Bookings for {{ service_provider.user.username }}</h1>
+    {% if not service_provider.is_approved %}
+    <div class="alert alert-warning mt-3">
+        {{ approval_message }}
+        <h3>Get Approved first</h3>
+    </div>
+    {% else %}
+    <div class="card mt-4">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Placed On</th>
+                        <th>Requested Date</th>
+                        <th>Customer</th>
+                        <th>Contact Email</th>
+                        <th>Contact Phone</th>
+                        <th>Services</th>
+                        <th>Address</th>
+                        <th>Select Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <td>{{ booking.order.order_date }}</td>
+                            <td>{{ booking.order.delivery_date }}</td>
+                            <td>{{ booking.order.user.username }}</td>
+                            <td>{{ booking.order.user.email }}</td>
+                            <td>{{ booking.order.user.mble }}</td>
+                            <td>
+                                <ul>
+                                    {% for product in booking.order.products.all %}
+                                        <li>{{ product.name }} - ${{ product.price }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            <td>Villas {{ booking.order.address.flat_address }}</td>  {# Display the address here #}
+                            <td>
+                                {% if booking.chosen_datetime %}
+                                {{ booking.chosen_datetime }}
+                            {% else %}
+                                <a href="{% url 'select_datetime' order_id=booking.id %}" class="btn btn-dark" style="border-radius: 10px;">Select Time</a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    {% endif %}
+</div>
+{% endblock %}

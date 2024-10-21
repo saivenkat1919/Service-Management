@@ -1,0 +1,49 @@
+{% extends 'html/base.html' %}
+{% block title %}HelpDesk{% endblock %}
+{% block content %}
+{% load static %}
+
+<div class="headin">
+  <div>
+    {% if messages %}
+      {% for i in messages %}
+        {% if i.tags == "error" %}
+          <div class="alert alert-danger alert-dismissible my-2">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ i }}
+          </div>
+        {% else %}
+          <div class="alert alert-{{ i.tags }} alert-dismissible my-2">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ i }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    <h1>Get in Touch!</h1>
+  </div>
+</div>
+<div class="card col-md-5 mx-auto shadow-lg mt-4" style="height: 400px;width: 450px; border-radius: 10px;">
+<div class="forms">
+  <div class="getin">
+    <form method="POST">
+      {% csrf_token %} 
+      <div class="row pb-3">
+        <div class="col">
+          <input type="email" id="box" name="sn" class="form-control" placeholder="Email address">
+        </div>
+      </div>
+      <div class="row pb-3">
+        <div class="col">
+          <input type="text" id="box" name="sb" class="form-control" placeholder="Subject">
+        </div>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" id="tarea" rows="4" name="msg" placeholder="Type your message"></textarea>
+      </div>
+      <button id="butt" type="submit" value="Send Mail" class="btn btn-primary" style="border-radius: 10px; width: 100%;">Submit</button>
+    </form>
+  </div>
+</div>
+</div>
+{% endblock %}

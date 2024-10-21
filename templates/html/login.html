@@ -1,0 +1,29 @@
+{% extends 'html/base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="loginPage container">
+    <h1>Login</h1>
+    <div class="card col-md-5 mx-auto shadow-lg mt-4" id="login" style="border-radius: 10px;">
+      {% if messages %}
+            {% for m in messages %}
+                <div class="alert alert-{{m.tags}} alert-dismissible">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{m}}
+                </div>
+            {% endfor %}
+        {% endif %}
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3 mt-3">
+          <input type="text" name="username" placeholder="Username" class="form-control my-2">
+                
+        </div>
+        <div class="mb-3">
+          <input type="password" name="password" placeholder="Password" class="form-control my-2">
+        </div>
+        <button id="but" type="submit" class="btn btn-primary" style="border-radius: 10px;">Login</button>
+        <p class="para">Don’t you have an account? <a href="{% url 'signup' %}"><span class="span">Sign up</span></a></p>
+      </form> 
+    </div>
+</div>
+{% endblock %}

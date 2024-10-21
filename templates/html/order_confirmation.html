@@ -1,0 +1,41 @@
+{% extends 'html/base.html' %}
+
+{% block content %}
+<style>
+    table,tr,th,td{
+        border: 2px solid #bebebe;
+        padding: 7px 20px 7px 20px;
+    }
+</style>
+<div class="odconfirm" style=" margin-top: 30px;display:  flex; flex-direction: column; align-items: center;">
+    <h1>Booking Confirmation</h1>
+    <div class="uorder" style="margin-bottom: 30px;">
+        <div class="uorder_content" style="border: 2px solid #ddd; border-radius: 10px; padding: 20px 20px 0 20px;">
+            <p> <span style="font-weight: bold;">Requested Date:</span> {{ order.delivery_date }}</p>
+            <p> <span style="font-weight: bold;">Placed On:</span> {{ order.order_date }}</p>
+            <p> <span style="font-weight: bold;">Flat Address:</span>  {{ order.address.flat_address }}</p>
+</div>
+</div>
+<div class="ordetails">
+    <table>
+        <tr>
+            <th>Service</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        {% for item in order.products.all %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>${{ item.price }}</td>
+                
+                <td>${{ item.price|floatformat:2 }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3"><strong>Total</strong></td>
+            <td><strong>${{ order.total_amount }}</strong></td>
+        </tr>
+    </table>
+</div>
+</div>
+{% endblock %}

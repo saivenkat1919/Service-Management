@@ -1,0 +1,62 @@
+
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1>Allocate Booking</h1>
+    <div class="card mt-4" style="margin-bottom: 20px;">
+        <div class="card-body">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <h6 class="card-subtitle mb-2" style="font-size: 24px; color: #424242; margin: 20px 0px 0px 20px; font-weight: 600;">Booking Details:</h6>
+            <div style="padding: 10px 0px 0px 20px;">
+                <p class="card-title" style="text-align: left; font-size: 16px;">User: {{ order.user.username }}</p>
+                <h5 class="card-title" style="font-size: 16px;">Placed On: {{ order.order_date }}</h5>
+                <p class="card-title" style="text-align: left; font-size: 16px;">Requested Date: {{ order.delivery_date }}</p>
+            </div>
+            
+            <p style="text-align: left;font-size: 24px; margin: 20px 0px 0px 20px; font-weight: 600; color: #424242;">Booking Status: {{ order.status }}</p>
+
+            <h6 class="card-subtitle mb-2" style="margin: 20px 0 0 20px; font-size: 24px;font-weight: 600; color: #424242;">Services Requested:</h6>
+            <ul>
+                {% for product in order.products.all %}
+                                    <li class="list-group-item" >
+                                        {{ product.name }} - ${{ product.price }}
+                                    </li>
+                                    
+                                {% endfor %}
+            </ul>
+
+            <h2 style="margin: 20px 0 0 20px; color: #424242; font-size: 24px;font-weight: 600;">Allocated Service Providers:</h2>
+            <ul>
+                {% for allocated_provider in order.allocatedorder_set.all %}
+                    <li>{{ allocated_provider.service_provider.user.username }}</li>
+                {% endfor %}
+            </ul>
+          <h2 style="margin: 20px 0 0 20px; color: #424242; font-size: 24px;font-weight: 600;">Selected  Service provider</h2>
+          <div class="row" style="margin-left: 10px;padding-top: 10px;">
+            <form method="post">
+                {% csrf_token %}
+                {%for i in form %}
+                   {{i}}
+                {%endfor%}
+                <button type="submit" class="btn btn-success" style="border-radius: 10px;margin-top: 10px; margin-bottom: 10px;">Allocate</button>
+            </form>
+            <form method="post" action="{% url 'unallocate_order' order.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger" style="border-radius: 10px; position: absolute; left: 130px;bottom: 26px;">Unallocate</button>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

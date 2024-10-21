@@ -1,0 +1,24 @@
+{% extends 'html/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card col-md-5 mx-auto shadow-lg mt-4" id="login" style="border-radius: 10px;">
+    <h1>Feedback Form</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {% for i in f %}
+            {{i}}
+          {% endfor %}
+          <button type="submit" href="{% url 'Thanks' %}" class="btn btn-dark">Submit Feedback</button>
+    </form>
+    <h4>Allocated Service Providers:</h4>
+    <ul>
+        {% for i in s %}
+        <li>{{ i.service_provider.user.username}}</li>
+        {%endfor%}
+    </ul>
+</div>
+</div>
+{% endblock %}

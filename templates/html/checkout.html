@@ -1,0 +1,52 @@
+{% extends 'html/base.html' %}
+
+{% block content %}
+<style>
+    table,tr,th,td{
+        border: 2px solid #bebebe;
+        padding: 7px 20px 7px 20px;
+    }
+</style>
+<div class="checkoutt" style=" margin-top: 30px;display:  flex; flex-direction: column; align-items: center;">
+    <div class="checcard">
+        <h1 style="text-align: center;">Checkout</h1>
+        <h2 style="font-size: 24px;">Flat Details</h2>
+    <div  class="card col-md-5 mx-auto shadow-lg mt-4" style="height: 175px;width: 500px; margin-bottom: 30px;">
+    <form method="post" style="padding: 15px 20px 25px 20px;">
+        {% csrf_token %}
+        {% for i in address_form%}
+           {{i}}
+        {%endfor%}
+        <label for="delivery_date">Service Request Date:</label>
+        <input type="datetime-local" name="delivery_date" id="delivery_date" required style="margin-left: 3px; padding: 10px; border: 2px solid #414141; border-radius: 10px; height: 35px;">
+        <button type="submit" style="height: 35px; border-radius: 8px;padding: 0 10px 0 10px;color: white; background-color: #333; border-style: none; margin-top: 10px;">Place Booking</button>
+    </form>
+</div>
+</div>
+<div class="checcard1">
+    <h2 style="font-size: 24px; padding-bottom: 20px;">Your Cart</h2>
+    
+    <table style="margin: auto; justify-content: center;">
+        <tr>
+            <th>Service</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>${{ item.product.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.product.price|floatformat:2 }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="3"><strong>Total</strong></td>
+            <td><strong>${{ cart_total }}</strong></td>
+        </tr>
+    </table>
+</div>
+</div>
+    
+{% endblock %}
