@@ -1,0 +1,71 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    scroll-behavior: smooth;
+}
+#btn2{
+    background-color: #212529;
+    color: white;
+    border: 1px solid white;
+}
+#btn2 a{
+    color: white;
+    text-decoration: none;
+}
+#btn1{
+    background-color: white;
+    color: black;
+}
+#btn1 a{
+    color: black;
+    text-decoration: none;
+}
+.imgbt{
+    border-style: none;
+    background-color: transparent;
+    padding-right: 10px;
+}
+.hero{
+    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),url(/static/images/plumber-tools-shaking-client-hand-technical-maintenance-repair-services-plumber-tools-shaking-client-hand-technical-161866211.webp);
+    width: 80%;
+    height: 600px;
+    margin: auto;
+    background-repeat: no-repeat;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-radius: 20px;
+}
+.hero h1{
+    color: white;
+    padding-bottom: 20px;
+}
+.hero .buttn{
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    border-style: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+.innercontent{
+    display: flex;
+    padding-left: 100px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 290px;
+}
+
+.thumbnail{
+	width: 100%;
+	height: 200px;
+	-webkit-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+    -moz-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+    box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+}
+.box-element{
+	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 10px;
+}
